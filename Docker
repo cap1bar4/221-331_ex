@@ -1,0 +1,23 @@
+FROM ubuntu
+
+LABLE author = "Lesnikova Maria"
+
+ENV TZ=Europe/Moscow
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN apt-get update
+RUN apt-get install qtbase5-dev -y
+RUN apt-get install qt5-qmake
+RUN apt-get install build-essential -y     
+
+WORKDIR /root/
+RUN mkdir MyProj_221_331_lesnikova
+WORKDIR /root/MyProj_221_331_lesnikova/
+COPY *.cpp /root/MyProj_221_331_lesnikova/
+COPY *.h /root/MyProj_221_331_lesnikova/
+COPY *.pro /root/MyProj_221_331_lesnikova/
+
+RUN qmake exam2906_lesnikova331.pro
+RUN make
+
+ENTRYPOINT ["./exam2906_lesnikova331"]
